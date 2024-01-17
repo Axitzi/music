@@ -27,9 +27,9 @@ const songs = [
     },
     {
         path: 'assets/3.mp3',
-        displayName: 'Intellect',
+        displayName: 'La victima',
         cover: 'assets/3.jpg',
-        artist: 'Yung Logos',
+        artist: 'Xavi',
     }
 ];
 
