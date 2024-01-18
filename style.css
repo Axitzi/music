@@ -7,7 +7,7 @@ html{
 body{
     margin: 0;
     font-family: 'Ubuntu', sans-serif;
-    font-size: 12px;
+    font-size:15px;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -38,7 +38,7 @@ body{
 }
 
 .container{
-    background-color: #e7e7e7;
+    background-color: #ffffff46;
     height: 500px;
     width: 400px;
     border-radius: 20px;
@@ -93,7 +93,7 @@ h3{
 }
 
 .player-progress{
-    background-color: #fff;
+    background-color: #ffffff46;
     border-radius: 5px;
     cursor: pointer;
     margin: 40px 20px 35px;
@@ -102,7 +102,7 @@ h3{
 }
 
 .progress{
-    background-color: #212121;
+    background-color: #ffffff38;
     border-radius: 5px;
     height: 100%;
     width: 0%;
@@ -125,7 +125,7 @@ h3{
 
 .fa-solid{
     font-size: 30px;
-    color: #666;
+    color: #ffffff4b;
     margin-right: 30px;
     cursor: pointer;
     user-select: none;
