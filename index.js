@@ -10,6 +10,15 @@ const image = document.getElementById('cover'),
     playBtn = document.getElementById('play'),
     background = document.getElementById('bg-img');
 
+const MUSIC_STORAGE_KEY = 'axitzi_music';
+
+// Obtener el estado guardado del almacenamiento local
+const savedMusicState = JSON.parse(localStorage.getItem(MUSIC_STORAGE_KEY));
+
+let musicIndex = (savedMusicState && savedMusicState.musicIndex) ? savedMusicState.musicIndex : 0;
+let currentTime = (savedMusicState && savedMusicState.currentTime) ? savedMusicState.currentTime : 0;
+let isPlaying = false;
+
 const music = new Audio();
 
 const songs = [
@@ -30,11 +39,22 @@ const songs = [
         displayName: 'La victima',
         cover: 'assets/3.jpg',
         artist: 'Xavi',
+    },
+    {
+        path: 'assets/4.mp3',
+        displayName: 'Estos Celos',
+        cover: 'assets/4.jpg',
+        artist: 'Vicente Fernandez',
     }
 ];
 
-let musicIndex = 0;
-let isPlaying = false;
+function saveMusicState() {
+    // Guardar el estado actual en el almacenamiento local
+    localStorage.setItem(MUSIC_STORAGE_KEY, JSON.stringify({
+        musicIndex,
+        currentTime
+    }));
+}
 
 function togglePlay() {
     if (isPlaying) {
@@ -46,18 +66,17 @@ function togglePlay() {
 
 function playMusic() {
     isPlaying = true;
-    // Change play button icon
+    // Cambiar el icono del botón de reproducción
     playBtn.classList.replace('fa-play', 'fa-pause');
-    // Set button hover title
+    // Establecer el título de información al pasar el mouse
     playBtn.setAttribute('title', 'Pause');
     music.play();
+    music.currentTime = currentTime; // Reproducir en el segundo exacto
 }
 
 function pauseMusic() {
     isPlaying = false;
-    // Change pause button icon
     playBtn.classList.replace('fa-pause', 'fa-play');
-    // Set button hover title
     playBtn.setAttribute('title', 'Play');
     music.pause();
 }
@@ -68,6 +87,7 @@ function loadMusic(song) {
     artist.textContent = song.artist;
     image.src = song.cover;
     background.src = song.cover;
+    saveMusicState();
 }
 
 function changeMusic(direction) {
@@ -84,12 +104,14 @@ function updateProgressBar() {
     const formatTime = (time) => String(Math.floor(time)).padStart(2, '0');
     durationEl.textContent = `${formatTime(duration / 60)}:${formatTime(duration % 60)}`;
     currentTimeEl.textContent = `${formatTime(currentTime / 60)}:${formatTime(currentTime % 60)}`;
+    saveMusicState();
 }
 
 function setProgressBar(e) {
     const width = playerProgress.clientWidth;
     const clickX = e.offsetX;
     music.currentTime = (clickX / width) * music.duration;
+    updateProgressBar(); // Actualizar la barra de progreso después de cambiar manualmente
 }
 
 playBtn.addEventListener('click', togglePlay);
@@ -99,4 +121,6 @@ music.addEventListener('ended', () => changeMusic(1));
 music.addEventListener('timeupdate', updateProgressBar);
 playerProgress.addEventListener('click', setProgressBar);
 
+// Cargar la información de la canción y el tiempo de reproducción guardado
 loadMusic(songs[musicIndex]);
+
