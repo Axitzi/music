@@ -39,12 +39,6 @@ const songs = [
         displayName: 'La victima',
         cover: 'assets/3.jpg',
         artist: 'Xavi',
-    },
-    {
-        path: 'assets/4.mp3',
-        displayName: 'Estos Celos',
-        cover: 'assets/4.jpg',
-        artist: 'Vicente Fernandez',
     }
 ];
 
